@@ -1,9 +1,9 @@
-// App.tsx
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Form from "./Form";
 import Card from "./Card";
-import Blog from "./Blog"; // ✅ Import Blog
+import Blog from "./Blog"; 
 import EditBlog from "./EditBlog";
 
 export default function App() {

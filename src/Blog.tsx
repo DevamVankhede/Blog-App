@@ -12,12 +12,10 @@ interface BlogType {
 export default function Blog() {
   const { id } = useParams<{ id: string }>();
 
-  // Get stored blogs from localStorage
   const storedBlogs = localStorage.getItem("blogs");
   let allBlogs: BlogType[] = [];
 
   if (storedBlogs) {
-    // Merge Data.json blogs with stored blogs
     const customBlogs = JSON.parse(storedBlogs) as BlogType[];
     allBlogs = [...data, ...customBlogs];
   } else {
