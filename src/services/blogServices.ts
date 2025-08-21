@@ -1,7 +1,7 @@
-// src/services/blogService.ts
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/api/blogs";
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:8000/api/blogs";
 
 export async function createBlog(blog: any) {
   return axios.post(API_URL, blog);
