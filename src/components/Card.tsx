@@ -10,6 +10,10 @@ type Blog = {
   blog: string;
 };
 
+// ✅ Use env var (fallback to localhost if not set)
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 const Card = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const navigate = useNavigate();
@@ -18,7 +22,7 @@ const Card = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/blogs");
+        const res = await axios.get(`${API_URL}/api/blogs`);
         setBlogs(res.data);
       } catch (err: any) {
         console.error("Error fetching blogs:", err.message);
@@ -32,7 +36,7 @@ const Card = () => {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
 
     try {
-      await axios.delete(`http://localhost:8000/api/blogs/${id}`);
+      await axios.delete(`${API_URL}/api/blogs/${id}`);
       setBlogs((prev) => prev.filter((blog) => blog.id !== id)); // remove deleted blog
     } catch (err: any) {
       alert("Delete failed: " + err.message);
