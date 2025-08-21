@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
+const API_URL =
+  process.env.REACT_APP_API_URL ;
 interface BlogType {
   id: number;
   username: string;
@@ -27,7 +28,7 @@ export default function Blog() {
       try {
         setLoading(true);
         const res = await axios.get<BlogType>(
-          `http://localhost:8000/api/blogs/${id}`
+          `${API_URL}/api/blogs/${id}`
         );
         setBlog(res.data);
         setError("");

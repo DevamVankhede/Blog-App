@@ -10,9 +10,8 @@ type Blog = {
   blog: string;
 };
 
-// ✅ Use env var (fallback to localhost if not set)
 const API_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:8000";
+  process.env.REACT_APP_API_URL ;
 
 const Card = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
