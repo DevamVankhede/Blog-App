@@ -20,13 +20,13 @@ if (BUGSNAG_API_KEY && BUGSNAG_API_KEY !== "undefined") {
     plugins: [new BugsnagPluginReact()],
     appVersion: "1.0.0",
     releaseStage: process.env.NODE_ENV || "development",
-    enabledReleaseStages: ["development", "production"], // dono me allow
+    enabledReleaseStages: ["development", "production"], 
   });
 
   ErrorBoundary = Bugsnag.getPlugin("react")?.createErrorBoundary(React);
 
   if (process.env.NODE_ENV === "production") {
-    Bugsnag.notify(new Error("🔥 Test error from deployed app"));
+    Bugsnag.notify(new Error("Test error from deployed app"));
   }
 } else {
   console.warn(
