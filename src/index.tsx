@@ -7,7 +7,6 @@ import BugsnagPluginReact from "@bugsnag/plugin-react";
 
 const BUGSNAG_API_KEY = process.env.REACT_APP_BUGSNAG_API_KEY;
 
-// Debug log (sirf local pe dekhne ke liye)
 if (process.env.NODE_ENV === "development") {
   console.log("Bugsnag API Key:", BUGSNAG_API_KEY);
 }
@@ -20,14 +19,10 @@ if (BUGSNAG_API_KEY && BUGSNAG_API_KEY !== "undefined") {
     plugins: [new BugsnagPluginReact()],
     appVersion: "1.0.0",
     releaseStage: process.env.NODE_ENV || "development",
-    enabledReleaseStages: ["development", "production"], 
+    enabledReleaseStages: ["development", "production"],
   });
 
   ErrorBoundary = Bugsnag.getPlugin("react")?.createErrorBoundary(React);
-
-  if (process.env.NODE_ENV === "production") {
-    Bugsnag.notify(new Error("Test error from deployed app"));
-  }
 } else {
   console.warn(
     "⚠️ Bugsnag API key is not set. Skipping Bugsnag initialization."
@@ -49,3 +44,4 @@ root.render(
     )}
   </React.StrictMode>
 );
+Bugsnag.notify(new Error("Test error from deployed app"));
