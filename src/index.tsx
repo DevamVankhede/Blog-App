@@ -2,16 +2,46 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import Bugsnag from "@bugsnag/js";
+import BugsnagPluginReact from "@bugsnag/plugin-react";
+
+const BUGSNAG_API_KEY = process.env.REACT_APP_BUGSNAG_API_KEY;
+
+// ✅ Debug log
+console.log("Bugsnag API Key:", BUGSNAG_API_KEY);
+
+let ErrorBoundary: React.ComponentType<any> | undefined;
+
+if (BUGSNAG_API_KEY) {
+  Bugsnag.start({
+    apiKey: BUGSNAG_API_KEY,
+    plugins: [new BugsnagPluginReact()],
+    appVersion: "1.0.0",
+    releaseStage: process.env.NODE_ENV || "development",
+    enabledReleaseStages: ["development", "production"],
+  });
+
+  ErrorBoundary = Bugsnag.getPlugin("react")?.createErrorBoundary(React);
+
+  Bugsnag.notify(new Error("🔥 Test error from Devam's app"));
+} else {
+  console.warn(
+    "⚠️ Bugsnag API key is not set. Skipping Bugsnag initialization."
+  );
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    {ErrorBoundary ? (
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    ) : (
+      <App />
+    )}
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
